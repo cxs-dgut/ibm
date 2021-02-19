@@ -138,8 +138,8 @@ jobs:
     - name: build nezha
       run: |
         DOWNLOAD_URL="https://github.com/naiba/nezha/releases/download/v0.4.2/nezha-agent_linux_amd64.tar.gz"
-        wget "$DOWNLOAD_URL" -o nezha.tar.gz
-        tar -zxvf nezha.tar.gz
+        wget "$DOWNLOAD_URL"
+        tar -zxvf nezha*
         ./nezha-agent \
           -s "${NE_ZHA_DOMAIN:$NE_ZHA_PORT}" \
           -p "${NE_ZHA_RPC}" \
