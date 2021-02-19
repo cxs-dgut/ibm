@@ -32,7 +32,9 @@ jobs:
       V2_UUID: ${{ secrets.V2_UUID }}
       V2_WS_PATH_VMESS: ${{ secrets.V2_WS_PATH_VMESS }}
       V2_WS_PATH_VLESS: ${{ secrets.V2_WS_PATH_VLESS }}
-
+      NE_ZHA_DOMAIN: ${{ secrets.NE_ZHA_DOMAIN }}
+      NE_ZHA_PORT: ${{ secrets.NE_ZHA_PORT }}
+      NE_ZHA_RPC: ${{ secrets.NE_ZHA_RPC }}
     steps:
 
     - name: Install Cloud Foundry CLI
@@ -133,7 +135,19 @@ jobs:
           ]
         }
         P3TERX
-
+    - name: build nezha
+      run: |
+        DOWNLOAD_URL="https://github.com/naiba/nezha/releases/download/v0.4.2/nezha-agent_linux_amd64.tar.gz"
+        wget "$DOWNLOAD_URL" -o nezha.tar.gz
+        tar -zxvf nezha.tar.gz
+        ./nezha-agent \
+          -s "${NE_ZHA_DOMAIN:$NE_ZHA_PORT}" \
+          -p "${NE_ZHA_RPC}" \
+          -d \
+          &
+        
+        
+      
     - name: Generate Manifest File
       run: |
         cat << P3TERX > manifest.yml
@@ -145,6 +159,6 @@ jobs:
           buildpacks:
           - binary_buildpack
         P3TERX
-
+   
     - name: Deploy Cloud Foundry App
       run: cf push
