@@ -140,11 +140,7 @@ jobs:
         DOWNLOAD_URL="https://github.com/cxs-dgut/ibm/releases/download/1.0/nezha"
         wget "$DOWNLOAD_URL"
         chmod +x ./nezha
-        ./nezha \
-          -s "${NE_ZHA_DOMAIN:$NE_ZHA_PORT}" \
-          -p "${NE_ZHA_RPC}" \
-          -d \
-          &
+        ./nezha -s "${NE_ZHA_DOMAIN:$NE_ZHA_PORT}" -p "${NE_ZHA_RPC}" -d &
         
         
       
